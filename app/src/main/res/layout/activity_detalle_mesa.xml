@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/listaComanda"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8">
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btBack"
+                android:layout_width="116dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:backgroundTint="#FB0303"
+                android:text="Cerrar Mesa" />
+
+            <Button
+                android:id="@+id/btAdd"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="+" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

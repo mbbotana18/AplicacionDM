@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    tools:context=".admin.ModificarUsuario_Interfaz">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText_idUsuario"
+            android:layout_width="226dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Introduce usuario."
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
+        <Button
+            android:id="@+id/btBuscar"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6E6E6E"
+            android:text="Buscar" />
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/editText_idContraseña"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Contraseña."
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btModificar"
+            android:layout_width="183dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5587EA"
+            android:text="Modificar" />
+
+        <Button
+            android:id="@+id/btEliminar"
+            android:layout_width="288dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#FF0000"
+            android:text="Eliminar" />
+    </LinearLayout>
+
+</LinearLayout>

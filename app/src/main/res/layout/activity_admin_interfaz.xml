@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    tools:context=".Admin_Interfaz">
+
+    <Button
+        android:id="@+id/btAddUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir Usuario" />
+
+    <Button
+        android:id="@+id/btListUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Listar Usuarios" />
+
+    <Button
+        android:id="@+id/btModUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modificar Usuarios" />
+
+    <Button
+        android:id="@+id/btAddMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir Carta" />
+
+    <Button
+        android:id="@+id/btListCarta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Listar Carta" />
+
+    <Button
+        android:id="@+id/btModCarta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modificar Carta" />
+
+
+</LinearLayout>
