@@ -3,34 +3,41 @@ package com.example.proyectodm.usuario;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectodm.ConexionSQLiteHelper;
+import com.example.proyectodm.MainActivity;
 import com.example.proyectodm.R;
 import com.example.proyectodm.entidades.Comanda;
 import com.example.proyectodm.entidades.Consumicion;
 import com.example.proyectodm.utilidades.ComandaConfigurator;
 import com.example.proyectodm.utilidades.Utilidades;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DetalleMesa_Activity extends AppCompatActivity {
 
     ArrayList<String> listaInformacion;
+    ArrayList<String> listaInformacionComanda;
     ArrayList<Consumicion> listaConsumicion;
-    public ConexionSQLiteHelper conex;
     ListView ViewConsumicion;
     int mesa;
     String[] consumiciones = {"LENTEJAS", "PASTA", "PIZZA", "LASAÑA"};
     int[] precios = {8, 7, 7, 10};
     ComandaConfigurator c = new ComandaConfigurator(consumiciones, precios);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +88,105 @@ public class DetalleMesa_Activity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "Has elegido mesa: " + mesa, Toast.LENGTH_LONG).show();
 
-        conex = new ConexionSQLiteHelper(getApplicationContext(), "base_datos", null, 1);
-
         ViewConsumicion = (ListView) findViewById(R.id.listaComanda);
 
         Button btAdd_Consumicion = (Button) findViewById(R.id.btAdd);
         btAdd_Consumicion.setOnClickListener((v) -> {showCartaDialog();});
 
-        //consultarListaConsumicion();
+        listarCarta();
 
-        /*ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacion);
-        ViewConsumicion.setAdapter(adaptador);*/
+        ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacionComanda);
+        ViewConsumicion.setAdapter(adaptador);
 
+        calcularPrecioInicial(listaInformacionComanda);
+
+        Button btCerrarMesa = (Button) findViewById(R.id.btCerrarMesa);
+        btCerrarMesa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cerrarMesa();
+            }
+        });
+
+        colorBotones(listaInformacionComanda);
+
+    }
+
+    private void colorBotones(ArrayList<String> l){
+
+        Button bt01 = (Button) findViewById(R.id.bt01);
+        Button bt02 = (Button) findViewById(R.id.bt02);
+        Button bt03 = (Button) findViewById(R.id.bt03);
+        Button bt04 = (Button) findViewById(R.id.bt04);
+        Button bt11 = (Button) findViewById(R.id.bt11);
+        Button bt12 = (Button) findViewById(R.id.bt12);
+        Button bt13 = (Button) findViewById(R.id.bt13);
+        Button bt14 = (Button) findViewById(R.id.bt14);
+        Button bt21 = (Button) findViewById(R.id.bt21);
+        Button bt22 = (Button) findViewById(R.id.bt22);
+        Button bt23 = (Button) findViewById(R.id.bt23);
+        Button bt24 = (Button) findViewById(R.id.bt24);
+
+
+
+    }
+
+    private void calcularPrecioInicial(ArrayList<String> l){
+        TextView textViewPrecioTotal = (TextView) findViewById(R.id.textViewPrecioTotal);
+        int aux = 0;
+        for (int i = 0; i < l.size(); i++){
+            String [] s = l.get(i).split(" -- ");
+            aux += Integer.parseInt(s[1]);
+        }
+
+        textViewPrecioTotal.setText(aux+"€");
+
+    }
+
+    private void cerrarMesa(){
+        ConexionSQLiteHelper conexion2 = new ConexionSQLiteHelper(this, "base_datos", null, 1);
+        SQLiteDatabase db = conexion2.getWritableDatabase();
+        db.execSQL("DELETE FROM "+Utilidades.TABLA_COMANDA+" WHERE MESA = "+ mesa);
+        Toast.makeText(getApplicationContext(), "Mesa Cerrada", Toast.LENGTH_LONG).show();
+        db.close();
+        launchInterfazMesas();
+
+    }
+
+    private void listarCarta() {
+        ConexionSQLiteHelper conexion1 = new ConexionSQLiteHelper(this, "base_datos", null, 1);
+        SQLiteDatabase db = conexion1.getReadableDatabase();
+
+        Consumicion consumicion = null;
+        listaConsumicion = new ArrayList<Consumicion>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utilidades.TABLA_COMANDA + " WHERE MESA = "+ mesa, null);
+
+        while (cursor.moveToNext()) {
+            consumicion = new Consumicion("a",1);
+            consumicion.setNombre(cursor.getString(0));
+            consumicion.setPrecio(cursor.getInt(1));
+            listaConsumicion.add(consumicion);
+
+        }
+        obtenerLista();
+    }
+
+    private void obtenerLista() {
+        listaInformacionComanda = new ArrayList<String>();
+
+        for (int i = 0; i < listaConsumicion.size(); i++) {
+            int f=i+1;
+            listaInformacionComanda.add(f+". "+listaConsumicion.get(i).getNombre()+" -- "+listaConsumicion.get(i).getPrecio());
+        }
+    }
+
+    private void consultarComanda() {
+        listaInformacion = new ArrayList<String>();
+        for(int i = 0; i < c.selectedConsumiciones.length; i++){
+            if(c.selectedConsumiciones[i]){
+                listaInformacion.add(consumiciones[i] + " - " + precios[i]);
+            }
+        }
 
     }
 
@@ -109,43 +203,46 @@ public class DetalleMesa_Activity extends AppCompatActivity {
         comanda.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                //updateTotalCost;
+                updateTotalCost();
             }
         });
         comanda.create().show();
     }
 
-    private void consultarListaConsumicion(){
-        SQLiteDatabase db = conex.getReadableDatabase();
+    private void updateTotalCost(){
+        TextView totalTextView = (TextView) findViewById(R.id.textViewPrecio);
+        int total = c.calcularPrecio();
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        totalTextView.setText(decimalFormat.format(total)+"€");
 
-        Consumicion consumicion = null;
-        listaConsumicion = new ArrayList<Consumicion>();
+        consultarComanda();
 
-        Cursor cursor = db.rawQuery("SELECT CONSUMICIONES, PRECIO FROM "+Utilidades.TABLA_COMANDA+" WHERE MESA = " +mesa, null);
+        ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacion);
+        ViewConsumicion.setAdapter(adaptador);
 
-        while (cursor.moveToNext()){
-            consumicion = new Consumicion("a", 1);
-            consumicion.setNombre(cursor.getString(0));
-            consumicion.setPrecio(cursor.getInt(1));
-
-            listaConsumicion.add(consumicion);
-        }
-        obtenerLista();
+        registrarComanda(total);
     }
 
-    private void obtenerLista(){
-        listaInformacion = new ArrayList<String>();
+    private void registrarComanda(int total) {
+        ConexionSQLiteHelper conexion = new ConexionSQLiteHelper(this, "base_datos", null, 1);
 
+        SQLiteDatabase db = conexion.getWritableDatabase();
 
-        for(int i = 0; i < listaConsumicion.size(); i++){
-            listaInformacion.add(listaConsumicion.get(i).getNombre()+" - "+listaConsumicion.get(i).getPrecio());
-        }
+        ContentValues values = new ContentValues();
+        values.put(Utilidades.CAMPO_CONSUMICIONES, listaInformacion.toString());
+        values.put(Utilidades.CAMPO_PRECIO_TOTAL, String.valueOf(total));
+        values.put(Utilidades.CAMPO_MESA, String.valueOf(mesa));
 
-        if(listaInformacion.size() == 0){
-            Toast.makeText(getApplicationContext(), "vacio", Toast.LENGTH_LONG);
-            listaInformacion.add("Hola");
-        }
+        Long idResultante = db.insert(Utilidades.TABLA_COMANDA, Utilidades.CAMPO_CONSUMICIONES, values);
 
+        Toast.makeText(getApplicationContext(), "Id Registro: " + idResultante, Toast.LENGTH_SHORT).show();
+        db.close();
+    }
+
+    private void launchInterfazMesas() { //esto es para lanzar la interfaz de las mesas
+        Intent intent = new Intent(this, InterfazMesas_Activity.class);
+
+        startActivity(intent);
 
     }
 
