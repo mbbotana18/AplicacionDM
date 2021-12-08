@@ -47,7 +47,7 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modificarUsuario();
+                modificarCarta();
             }
         });
 
@@ -70,7 +70,7 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         confirmacion.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                eliminarUsuario();
+                eliminarCarta();
             }
         });
         confirmacion.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -130,7 +130,7 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         campoPrecio.setText("");
     }
 
-    private void modificarUsuario() {
+    private void modificarCarta() {
         String vacia ="";
         if(campoPlato.getText().toString().equals(vacia)){
             Toast.makeText(getApplicationContext(), "Introduce plato a modificar", Toast.LENGTH_LONG).show();
@@ -147,7 +147,7 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         }
     }
 
-    private void eliminarUsuario() {
+    private void eliminarCarta() {
         String vacia ="";
         if(campoPlato.getText().toString().equals(vacia)){
             Toast.makeText(getApplicationContext(), "Introduce plato a eliminar", Toast.LENGTH_LONG).show();
