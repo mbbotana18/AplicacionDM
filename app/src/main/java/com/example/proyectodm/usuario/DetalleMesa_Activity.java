@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,10 +33,11 @@ public class DetalleMesa_Activity extends AppCompatActivity {
     ArrayList<String> listaInformacion;
     ArrayList<String> listaInformacionComanda;
     ArrayList<Consumicion> listaConsumicion;
+    ArrayList<Consumicion> listaCarta;
     ListView ViewConsumicion;
     int mesa;
-    String[] consumiciones = {"LENTEJAS", "PASTA", "PIZZA", "LASAÑA"};
-    int[] precios = {8, 7, 7, 10};
+    String[] consumiciones = {"PIZZA", "PASTA", "SOPA", "LENTEJAS"};//Esto deberia rellenarse con los valores de la base de datos pero no va
+    int[] precios = {7, 8, 5, 6};//Esto deberia rellenarse con los valores de la base de datos pero no va
     ComandaConfigurator c = new ComandaConfigurator(consumiciones, precios);
 
 
@@ -90,10 +92,12 @@ public class DetalleMesa_Activity extends AppCompatActivity {
 
         ViewConsumicion = (ListView) findViewById(R.id.listaComanda);
 
+        //listarCarta(); si se usa este metodo no va la app
+
         Button btAdd_Consumicion = (Button) findViewById(R.id.btAdd);
         btAdd_Consumicion.setOnClickListener((v) -> {showCartaDialog();});
 
-        listarCarta();
+        listarComanda();
 
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacionComanda);
         ViewConsumicion.setAdapter(adaptador);
@@ -108,28 +112,9 @@ public class DetalleMesa_Activity extends AppCompatActivity {
             }
         });
 
-        colorBotones(listaInformacionComanda);
 
     }
 
-    private void colorBotones(ArrayList<String> l){
-
-        Button bt01 = (Button) findViewById(R.id.bt01);
-        Button bt02 = (Button) findViewById(R.id.bt02);
-        Button bt03 = (Button) findViewById(R.id.bt03);
-        Button bt04 = (Button) findViewById(R.id.bt04);
-        Button bt11 = (Button) findViewById(R.id.bt11);
-        Button bt12 = (Button) findViewById(R.id.bt12);
-        Button bt13 = (Button) findViewById(R.id.bt13);
-        Button bt14 = (Button) findViewById(R.id.bt14);
-        Button bt21 = (Button) findViewById(R.id.bt21);
-        Button bt22 = (Button) findViewById(R.id.bt22);
-        Button bt23 = (Button) findViewById(R.id.bt23);
-        Button bt24 = (Button) findViewById(R.id.bt24);
-
-
-
-    }
 
     private void calcularPrecioInicial(ArrayList<String> l){
         TextView textViewPrecioTotal = (TextView) findViewById(R.id.textViewPrecioTotal);
@@ -153,7 +138,34 @@ public class DetalleMesa_Activity extends AppCompatActivity {
 
     }
 
-    private void listarCarta() {
+    //No entendemos por que al usar estos metodos no funciona la aplicacion
+    /*private void listarCarta() {
+        ConexionSQLiteHelper conexion1 = new ConexionSQLiteHelper(this, "base_datos", null, 1);
+        SQLiteDatabase db = conexion1.getReadableDatabase();
+
+        Consumicion consumicion = null;
+        listaCarta = new ArrayList<Consumicion>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utilidades.TABLA_CARTA, null);
+
+        while (cursor.moveToNext()) {
+            consumicion = new Consumicion("a",1);
+            consumicion.setNombre(cursor.getString(0));
+            consumicion.setPrecio(cursor.getInt(1));
+            listaCarta.add(consumicion);
+
+        }
+        obtenerCarta();
+    }
+
+    private void obtenerCarta() {
+
+        for (int i = 0; i < listaCarta.size(); i++) {
+            consumiciones[i] = listaCarta.get(i).getNombre();
+            precios[i] = listaCarta.get(i).getPrecio();
+        }
+    }*/
+
+    private void listarComanda() {
         ConexionSQLiteHelper conexion1 = new ConexionSQLiteHelper(this, "base_datos", null, 1);
         SQLiteDatabase db = conexion1.getReadableDatabase();
 
@@ -204,6 +216,7 @@ public class DetalleMesa_Activity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 updateTotalCost();
+                launchInterfazMesas();
             }
         });
         comanda.create().show();

@@ -2,7 +2,9 @@ package com.example.proyectodm.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,11 +55,30 @@ public class ModificarUsuario_Interfaz extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eliminarUsuario();
+                showConfirmacionDialog();
             }
         });
 
 
+    }
+
+    private void showConfirmacionDialog() {
+        AlertDialog.Builder confirmacion = new AlertDialog.Builder(this);
+        confirmacion.setTitle("¿Seguro que quieres eliminar esto?");
+
+        confirmacion.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                eliminarUsuario();
+            }
+        });
+        confirmacion.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+
+            }
+        });
+        confirmacion.create().show();
     }
 
 

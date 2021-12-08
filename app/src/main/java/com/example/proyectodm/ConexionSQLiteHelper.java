@@ -1,5 +1,6 @@
 package com.example.proyectodm;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -21,6 +22,10 @@ public class ConexionSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(Utilidades.CREAR_TABLA_USUARIOS);
         db.execSQL(Utilidades.CREAR_TABLA_CARTA);
         db.execSQL(Utilidades.CREAR_TABLA_COMANDA);
+        ContentValues values = new ContentValues();
+        values.put(Utilidades.CAMPO_ID, "admin");
+        values.put(Utilidades.CAMPO_PASSWORD, "1");
+        db.insert(Utilidades.TABLA_USUARIO, null, values);
     }
 
     @Override

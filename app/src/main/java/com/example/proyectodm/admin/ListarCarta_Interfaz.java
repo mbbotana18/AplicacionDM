@@ -2,15 +2,24 @@ package com.example.proyectodm.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.proyectodm.Admin_Interfaz;
 import com.example.proyectodm.ConexionSQLiteHelper;
 import com.example.proyectodm.MainActivity;
 import com.example.proyectodm.R;
@@ -38,6 +47,17 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
 
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacion);
         listViewCarta.setAdapter(adaptador);
+
+        this.registerForContextMenu(listViewCarta);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu( menu, v, menuInfo );
+
+        this.getMenuInflater().inflate( R.menu.menu_contextual, menu );
+        return;
     }
 
     public boolean onCreateOptionsMenu(Menu menu){ //este metodo es para crear el menu
@@ -59,6 +79,33 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
         }
 
         return toret;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        boolean toret = super.onContextItemSelected(item);
+
+        switch ( item.getItemId() ) {
+            case R.id.item_contextual_elimina:
+                launchInterfazModCarta();
+                toret = true;
+                break;
+            case R.id.item_contextual_modifica:
+                launchInterfazModCarta();
+                toret=true;
+                break;
+        }
+
+        return toret;
+    }
+
+
+    private void launchInterfazModCarta(){ //esto es para lanzar la interfaz
+        Intent intent= new Intent(this, ModificarCarta_Interfaz.class);
+
+        startActivity(intent);
+
     }
 
 
