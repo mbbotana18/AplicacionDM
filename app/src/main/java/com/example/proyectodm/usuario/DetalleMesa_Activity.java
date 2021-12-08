@@ -16,6 +16,7 @@ import com.example.proyectodm.ConexionSQLiteHelper;
 import com.example.proyectodm.R;
 import com.example.proyectodm.entidades.Comanda;
 import com.example.proyectodm.entidades.Consumicion;
+import com.example.proyectodm.utilidades.ComandaConfigurator;
 import com.example.proyectodm.utilidades.Utilidades;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class DetalleMesa_Activity extends AppCompatActivity {
     public ConexionSQLiteHelper conex;
     ListView ViewConsumicion;
     int mesa;
+    String[] consumiciones = {"LENTEJAS", "PASTA", "PIZZA", "LASAÑA"};
+    int[] precios = {8, 7, 7, 10};
+    ComandaConfigurator c = new ComandaConfigurator(consumiciones, precios);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +100,18 @@ public class DetalleMesa_Activity extends AppCompatActivity {
         AlertDialog.Builder comanda = new AlertDialog.Builder(this);
         comanda.setTitle("Selecciona las consumiciones:");
 
-
+        comanda.setMultiChoiceItems(c.consumiciones, c.getSelectedConsumiciones(), new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which, boolean isChecked) {
+                c.getSelectedConsumiciones()[which] = isChecked;
+            }
+        });
+        comanda.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                //updateTotalCost;
+            }
+        });
         comanda.create().show();
     }
 
