@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.proyectodm.ConexionSQLiteHelper;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 
 public class ListarUsuario_Interfaz extends AppCompatActivity {
 
+    EditText buscador;
     ListView listViewUsuarios;
     ArrayList<String> listaInformacion;
     ArrayList<Usuario> listaUsuarios;
@@ -32,12 +36,30 @@ public class ListarUsuario_Interfaz extends AppCompatActivity {
         setContentView(R.layout.activity_listar_usuario_interfaz);
 
         conexion1 = new ConexionSQLiteHelper(getApplicationContext(), "base_datos", null, 1);
-        listViewUsuarios = (ListView) findViewById(R.id.listaUsuarios);
+        listViewUsuarios = (ListView) findViewById(R.id.listViewUsuarios);
+        buscador = (EditText) findViewById(R.id.editText_idBuscar);
 
         listarPersonas();
 
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listaInformacion);
         listViewUsuarios.setAdapter(adaptador);
+
+        buscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adaptador.getFilter().filter((charSequence));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu){ //este metodo es para crear el menu

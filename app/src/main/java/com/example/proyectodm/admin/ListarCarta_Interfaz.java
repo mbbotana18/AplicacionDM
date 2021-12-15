@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 
 public class ListarCarta_Interfaz extends AppCompatActivity {
 
+    EditText consumiciones;
     ListView listViewCarta;
     ArrayList<String> listaInformacion;
     ArrayList<Consumicion> listaCarta;
@@ -42,6 +46,7 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
 
         conexion1 = new ConexionSQLiteHelper(getApplicationContext(), "base_datos", null, 1);
         listViewCarta = (ListView) findViewById(R.id.listaCarta);
+        consumiciones = (EditText) findViewById(R.id.editText_idConsumiciones);
 
         listarCarta();
 
@@ -49,6 +54,23 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
         listViewCarta.setAdapter(adaptador);
 
         this.registerForContextMenu(listViewCarta);
+
+        consumiciones.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adaptador.getFilter().filter((charSequence));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -142,4 +164,6 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+
 }
