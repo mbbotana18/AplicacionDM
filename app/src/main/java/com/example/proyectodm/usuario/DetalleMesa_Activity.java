@@ -256,6 +256,7 @@ public class DetalleMesa_Activity extends AppCompatActivity {
         Intent intent = new Intent(this, InterfazMesas_Activity.class);
 
         startActivity(intent);
+        this.finish();
 
     }
 

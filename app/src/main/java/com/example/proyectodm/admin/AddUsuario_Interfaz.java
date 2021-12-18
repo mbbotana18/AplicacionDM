@@ -89,6 +89,7 @@ public class AddUsuario_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(AddUsuario_Interfaz.this, Admin_Interfaz.class);
 
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -96,6 +97,7 @@ public class AddUsuario_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(AddUsuario_Interfaz.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 }

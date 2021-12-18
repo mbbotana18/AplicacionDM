@@ -238,6 +238,7 @@ public class InterfazMesas_Activity extends AppCompatActivity {
         Intent intent= new Intent(InterfazMesas_Activity.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 

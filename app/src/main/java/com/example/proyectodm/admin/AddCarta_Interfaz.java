@@ -90,6 +90,7 @@ public class AddCarta_Interfaz extends AppCompatActivity {
         Intent intent = new Intent(AddCarta_Interfaz.this, Admin_Interfaz.class);
 
         startActivity(intent);
+        this.finish();
 
     }
 
@@ -97,6 +98,7 @@ public class AddCarta_Interfaz extends AppCompatActivity {
         Intent intent = new Intent(AddCarta_Interfaz.this, MainActivity.class);
 
         startActivity(intent);
+        this.finish();
 
     }
 

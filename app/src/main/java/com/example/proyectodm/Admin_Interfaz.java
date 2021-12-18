@@ -139,6 +139,7 @@ public class Admin_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(Admin_Interfaz.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 }

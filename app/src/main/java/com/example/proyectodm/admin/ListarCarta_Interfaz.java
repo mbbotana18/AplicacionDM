@@ -162,6 +162,7 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(ListarCarta_Interfaz.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 

@@ -164,6 +164,7 @@ public class ModificarUsuario_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(ModificarUsuario_Interfaz.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 }

@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/mbarr/AndroidStudioProjects/AplicacionDM/app/src/main/res/layout/activity_listar_carta_interfaz.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mbarr/AndroidStudioProjects/AplicacionDM/app/src/main/res/layout/activity_listar_usuario_interfaz.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mbarr/Documents/ESEI/4/1 CUATRI/DM/Proyecto/app/src/main/res/layout/activity_add_carta_interfaz.xml" value="0.1" />
         <entry key="..\:/Users/mbarr/Documents/ESEI/4/1 CUATRI/DM/Proyecto/app/src/main/res/layout/activity_add_usuario_interfaz.xml" value="0.1" />
         <entry key="..\:/Users/mbarr/Documents/ESEI/4/1 CUATRI/DM/Proyecto/app/src/main/res/layout/activity_admin_interfaz.xml" value="0.1" />

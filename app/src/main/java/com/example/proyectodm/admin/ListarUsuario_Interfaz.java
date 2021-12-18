@@ -114,6 +114,7 @@ public class ListarUsuario_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(ListarUsuario_Interfaz.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 }

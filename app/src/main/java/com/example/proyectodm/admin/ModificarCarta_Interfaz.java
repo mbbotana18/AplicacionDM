@@ -165,6 +165,7 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         Intent intent= new Intent(ModificarCarta_Interfaz.this, MainActivity.class );
 
         startActivity(intent);
+        this.finish();
 
     }
 }
