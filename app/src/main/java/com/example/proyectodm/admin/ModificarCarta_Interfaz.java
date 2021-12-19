@@ -19,13 +19,18 @@ import android.widget.Toast;
 import com.example.proyectodm.ConexionSQLiteHelper;
 import com.example.proyectodm.MainActivity;
 import com.example.proyectodm.R;
+import com.example.proyectodm.entidades.Consumicion;
 import com.example.proyectodm.utilidades.Utilidades;
+
+import java.util.ArrayList;
 
 public class ModificarCarta_Interfaz extends AppCompatActivity {
 
     EditText campoPlato, campoPrecio;
     ConexionSQLiteHelper conexion1;
-
+    ArrayList<String> listaInformacion;
+    ArrayList<Consumicion> listaCarta;
+    int plato;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,10 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         conexion1 = new ConexionSQLiteHelper(getApplicationContext(), "base_datos", null, 1);
         campoPlato = (EditText) findViewById(R.id.editText_idPlato);
         campoPrecio = (EditText) findViewById(R.id.editText_idPrecio);
+
+        plato = getIntent().getIntExtra("plato", 0);
+        listarCarta();
+        campoPlato.setText(listaInformacion.get(plato));
 
         Button button = findViewById(R.id.btBuscar); //esto es para que cuando se pulse el boton se inicie la siguiente interfaz
         button.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +70,31 @@ public class ModificarCarta_Interfaz extends AppCompatActivity {
         });
 
 
+    }
+
+    private void listarCarta() {
+        SQLiteDatabase db = conexion1.getReadableDatabase();
+
+        Consumicion consumicion = null;
+        listaCarta = new ArrayList<Consumicion>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Utilidades.TABLA_CARTA, null);
+
+        while (cursor.moveToNext()) {
+            consumicion = new Consumicion("a",1);
+            consumicion.setNombre(cursor.getString(0));
+            //consumicion.setPrecio(cursor.getInt(1));
+            listaCarta.add(consumicion);
+
+        }
+        obtenerLista();
+    }
+
+    private void obtenerLista() {
+        listaInformacion = new ArrayList<String>();
+
+        for (int i = 0; i < listaCarta.size(); i++) {
+            listaInformacion.add(listaCarta.get(i).getNombre());
+        }
     }
 
     private void showConfirmacionDialog() {

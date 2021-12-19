@@ -107,14 +107,15 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item)
     {
         boolean toret = super.onContextItemSelected(item);
+        int plato = ( (AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
 
         switch ( item.getItemId() ) {
             case R.id.item_contextual_elimina:
-                launchInterfazModCarta();
+                launchInterfazModCarta(plato);
                 toret = true;
                 break;
             case R.id.item_contextual_modifica:
-                launchInterfazModCarta();
+                launchInterfazModCarta(plato);
                 toret=true;
                 break;
         }
@@ -123,9 +124,9 @@ public class ListarCarta_Interfaz extends AppCompatActivity {
     }
 
 
-    private void launchInterfazModCarta(){ //esto es para lanzar la interfaz
+    private void launchInterfazModCarta(int plato){ //esto es para lanzar la interfaz
         Intent intent= new Intent(this, ModificarCarta_Interfaz.class);
-
+        intent.putExtra("plato", plato);
         startActivity(intent);
 
     }
